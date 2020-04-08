@@ -75,6 +75,151 @@ public class Coordinate extends Point
 			return r;	
 	}
 	
+	public boolean diagonalIsClear(Coordinate to,Board b) {
+		
+		if(!this.sameDiagonal(to)) {
+			return false;
+		}
+		else {
+			//when the destination is larger both in X and Y
+			if(this.x < to.x && this.y < to.y) {
+				int xpos = this.x+1;
+				int ypos = this.y+1;
+				for(int i = 0;i < this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(xpos,ypos))!= null){
+						return false;
+					}
+					xpos++;
+					ypos++;
+			
+				}
+				
+			}
+			//when the destination is larger in x and not in y 
+			else if(this.x < to.x && this.y > to.y) {
+				int xpos = this.x+1;
+				int ypos = this.y-1;
+				for(int i = 0;i < this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(xpos,ypos))!= null){
+						return false;
+					}
+					xpos++;
+					ypos--;
+				}	
+			}
+			//when they are both less in the destination 
+			else if(this.x > to.x && this.y > to.y) {
+				int xpos = this.x-1;
+				int ypos = this.y-1;
+				for(int i = 0;i < this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(xpos,ypos))!= null){
+						return false;
+					}
+					xpos--;
+					ypos--;
+				}	
+			}
+			//when the y is larger but the x is not
+			else if(this.x > to.x && this.y < to.y) {
+				int xpos = this.x-1;
+				int ypos = this.y+1;
+				for(int i = 0;i < this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(xpos,ypos))!= null){
+						return false;
+					}
+					xpos--;
+					ypos++;
+				}	
+			}	
+		}
+		
+		return true;
+	}
+	
+	
+	/**
+	 * Check if two points are in the same diagonal 
+	 * @param to
+	 * @return true if points are in the same diagonl else return false 
+	 */
+	public boolean sameDiagonal(Coordinate to) {
+		
+		if(Math.abs((this.x - to.x)) == Math.abs((this.y - to.y))){
+			return true;
+		}
+		else return false;
+		
+
+	}
+	
+	/**
+	 * Description check if coordinates are orthogonal
+	 * @param to coordinate 
+	 * @return true if coordinates are alligned orthognaly else false 
+	 */
+	public boolean sameOrthogonal(Coordinate to) {
+		if(this.x == to.x && this.y != to.y ) {
+			return true;
+		}
+		else if(this.y == to.y && this.x != to.x) {
+			return true;
+		}
+		else return false;
+	}
+	
+	/**
+	 * Description calculate if the orthogonal is clear
+	 * @param to Coordinate to destination
+	 * @param b  board 
+	 * @return true if the orthogonal is clear
+	 */
+	public boolean clearOrthagonal(Coordinate to,Board b) {
+		if(!this.sameOrthogonal(to)) {
+			return false;
+		}
+		else{
+			
+			if(this.x == to.x && this.y < to.y) {
+				int ypos = this.y+1;
+				for(int i = 0; i< this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(this.x,ypos))!= null){
+						return false;
+					}
+					ypos++;
+				}
+			}
+			else if(this.x == to.x && this.y> to.y) {
+				int ypos = this.y-1;
+				for(int i = 0; i< this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(this.x,ypos))!= null){
+						return false;
+					}
+					ypos--;
+				}
+			}
+			else if(this.y == to.y && this.x < to.x) {
+				int xpos = this.x+1;
+				for(int i = 0; i< this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(xpos,this.y))!= null){
+						return false;
+					}
+					xpos++;
+				}
+			}
+			else if(this.y == to.y && this.x > to.x) {
+				int xpos = this.x-1;
+				for(int i = 0; i< this.distance(to)-1;i++) {
+					if(b.getPieceAt(makeCoordinate(xpos,this.y))!= null){
+						return false;
+					}
+					xpos--;
+				}
+			}
+			
+		}
+		return true;
+	}
+	
 	/**
 	 * @return the row
 	 */

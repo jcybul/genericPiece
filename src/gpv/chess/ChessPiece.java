@@ -12,7 +12,9 @@
 
 package gpv.chess;
 
+import java.util.ArrayList;
 import gpv.Piece;
+import gpv.chess.ListOfRules.Rules;
 import gpv.util.*;
 
 /**
@@ -68,7 +70,24 @@ public class ChessPiece implements Piece<ChessPieceDescriptor>
 	@Override
 	public boolean canMove(Coordinate from, Coordinate to, Board b)
 	{
-		// TODO Auto-generated method stub
+		HashListPerType hash = new HashListPerType();
+		ArrayList<Rules> rules = hash.hashMapOfRules.get(this.descriptor);
+		
+		//out of board conditions 
+		if(from.x > 8 || from.x < 1 || from.y > 8 || from.y < 1 ||to.x > 8 || 		to.x < 1 || to.y > 8 || to.y < 1) {
+			return false;
+		}
+		//to and from are the same 
+		if(from.x == to.x && from.y == to.y) {
+			return false;
+		}
+		// rules depending on the piece 
+		for(Rules r:rules){
+			System.out.println(r.testRules(from, to, b));
+			if(r.testRules(from, to, b)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -88,4 +107,6 @@ public class ChessPiece implements Piece<ChessPieceDescriptor>
 	{
 		hasMoved = true;
 	}
+	
+	
 }

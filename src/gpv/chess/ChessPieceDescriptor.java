@@ -40,6 +40,8 @@ public enum ChessPieceDescriptor implements PieceDescriptor
 	private PlayerColor color;
 	private PieceName name;
 	
+
+	
 	/**
 	 * Private constructor to set the color and name in the instance.
 	 * @param color
